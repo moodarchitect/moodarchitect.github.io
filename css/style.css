@@ -596,23 +596,10 @@ body.view-open { overflow: hidden; }
 }
 .svc-item { display: flex; flex-direction: column; align-items: center; scroll-margin-top: 120px; }
 .svc-ico {
-  width: clamp(96px, 9vw, 132px); height: auto; margin-bottom: 36px; overflow: visible;
-  fill: none; stroke: var(--ink); stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: square;
+  width: clamp(110px, 10vw, 150px); height: auto; margin-bottom: 30px;
   transition: transform .6s var(--ease-out);
 }
-.svc-ico .knock { fill: var(--white); }
-.svc-ico .fill { fill: var(--ink); }
-.svc-ico .dash { stroke-dasharray: 3 3; }
 .svc-item:hover .svc-ico { transform: translateY(-6px); }
-
-/* lines draw themselves in when the item scrolls into view */
-.js .svc-ico [pathLength] {
-  stroke-dasharray: 1; stroke-dashoffset: 1;
-  transition: stroke-dashoffset 1.6s var(--ease-out) .2s;
-}
-.js .svc-ico .fill { fill-opacity: 0; transition: fill-opacity .6s 1.2s; }
-.js .svc-item.visible .svc-ico [pathLength] { stroke-dashoffset: 0; }
-.js .svc-item.visible .svc-ico .fill { fill-opacity: 1; }
 
 .svc-no {
   font-family: "Montserrat", var(--sans); font-weight: 300; font-size: 15px; letter-spacing: .24em;
@@ -637,8 +624,4 @@ body.view-open { overflow: hidden; }
 @media (max-width: 640px) {
   .svc-icon-list { grid-template-columns: 1fr; gap: 64px; }
   .svc-item, .svc-item:nth-child(4) { grid-column: auto; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .js .svc-ico [pathLength] { stroke-dashoffset: 0; }
-  .js .svc-ico .fill { fill-opacity: 1; }
 }
