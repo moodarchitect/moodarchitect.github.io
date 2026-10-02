@@ -105,7 +105,7 @@
       navLinks.forEach(a => a.classList.toggle("active", a.getAttribute("href") === `#${e.target.id}`));
     });
   }, { rootMargin: "-45% 0px -50% 0px" });
-  ["hero", "about", "work", "contact"]
+  ["hero", "about", "services", "work", "contact"]
     .map(id => document.getElementById(id)).filter(Boolean)
     .forEach(el => sectionObserver.observe(el));
 
