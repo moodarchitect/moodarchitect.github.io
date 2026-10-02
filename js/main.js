@@ -42,6 +42,39 @@
   qrModal.addEventListener("click", e => { if (e.target === qrModal) setQr(false); });
   document.addEventListener("keydown", e => { if (e.key === "Escape" && qrModal.classList.contains("open")) setQr(false); });
 
+  // ---------- Service details pop-up ----------
+  const svcModal = $("#svcModal");
+  if (svcModal) {
+    const items = $$(".svc-item");
+    let svcIndex = 0, svcReturnFocus = null;
+    const fill = i => {
+      svcIndex = (i + items.length) % items.length;
+      const it = items[svcIndex];
+      $(".svc-modal-ico", svcModal).src = $(".svc-ico", it).src;
+      $("#svcModalNo").textContent = $(".svc-no", it).textContent;
+      $("#svcModalTitle").innerHTML = $(".svc-title", it).innerHTML;
+      $("#svcModalDesc").innerHTML = $(".svc-desc", it).innerHTML;
+    };
+    const setSvc = (open, i) => {
+      if (open) { fill(i); svcReturnFocus = document.activeElement; }
+      svcModal.classList.toggle("open", open);
+      svcModal.setAttribute("aria-hidden", !open);
+      document.body.style.overflow = open ? "hidden" : "";
+      if (open) $(".svc-close", svcModal).focus(); else svcReturnFocus?.focus();
+    };
+    items.forEach((it, i) => $(".svc-open", it).addEventListener("click", () => setSvc(true, i)));
+    $(".svc-close", svcModal).addEventListener("click", () => setSvc(false));
+    $(".svc-prev", svcModal).addEventListener("click", () => fill(svcIndex - 1));
+    $(".svc-next", svcModal).addEventListener("click", () => fill(svcIndex + 1));
+    svcModal.addEventListener("click", e => { if (e.target === svcModal) setSvc(false); });
+    document.addEventListener("keydown", e => {
+      if (!svcModal.classList.contains("open")) return;
+      if (e.key === "Escape") setSvc(false);
+      if (e.key === "ArrowLeft") fill(svcIndex - 1);
+      if (e.key === "ArrowRight") fill(svcIndex + 1);
+    });
+  }
+
   // ---------- Hero slideshow (home page only) ----------
   let startHero = () => {};
   const dotsEl = $("#heroDots");

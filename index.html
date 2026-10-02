@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Noto+Serif+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=202610021709">
+  <link rel="stylesheet" href="css/style.css?v=202610021711">
   <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
@@ -109,34 +109,49 @@
 
         <ol class="svc-icon-list">
           <li class="svc-item reveal" id="consultation">
-            <img class="svc-ico" src="images/service-1.png" alt="" width="260" height="222" loading="lazy">
-            <span class="svc-no">01</span>
-            <h2>Design &amp; Construction Consultation</h2>
-            <p>We provide professional consultation from the early stages of a project, helping clients understand design possibilities, project requirements, construction considerations, budget direction, and the appropriate process before moving forward.</p>
+            <button class="svc-open" type="button" aria-haspopup="dialog">
+              <img class="svc-ico" src="images/service-1.png" alt="" width="260" height="222" loading="lazy">
+              <span class="svc-no">01</span>
+              <h2 class="svc-title">Design &amp; Construction Consultation</h2>
+              <span class="svc-more">View details <i>+</i></span>
+            </button>
+            <p class="svc-desc" hidden>We provide professional consultation from the early stages of a project, helping clients understand design possibilities, project requirements, construction considerations, budget direction, and the appropriate process before moving forward.</p>
           </li>
           <li class="svc-item reveal" id="design">
-            <img class="svc-ico" src="images/service-2.png" alt="" width="260" height="222" loading="lazy">
-            <span class="svc-no">02</span>
-            <h2>Architecture &amp; Interior Design</h2>
-            <p>We create architecture and interior spaces based on the relationship between people, function, context, and mood — developing each project from concept and space planning to design development and visualization.</p>
+            <button class="svc-open" type="button" aria-haspopup="dialog">
+              <img class="svc-ico" src="images/service-2.png" alt="" width="260" height="222" loading="lazy">
+              <span class="svc-no">02</span>
+              <h2 class="svc-title">Architecture &amp; Interior Design</h2>
+              <span class="svc-more">View details <i>+</i></span>
+            </button>
+            <p class="svc-desc" hidden>We create architecture and interior spaces based on the relationship between people, function, context, and mood — developing each project from concept and space planning to design development and visualization.</p>
           </li>
           <li class="svc-item reveal" id="construction-drawing">
-            <img class="svc-ico" src="images/service-3.png" alt="" width="260" height="222" loading="lazy">
-            <span class="svc-no">03</span>
-            <h2>Detailed &amp; Construction Documentation</h2>
-            <p>Good design should be buildable. Our construction drawing service translates design concepts into detailed technical drawings that contractors and construction teams can clearly understand and execute on site.</p>
+            <button class="svc-open" type="button" aria-haspopup="dialog">
+              <img class="svc-ico" src="images/service-3.png" alt="" width="260" height="222" loading="lazy">
+              <span class="svc-no">03</span>
+              <h2 class="svc-title">Detailed &amp; Construction Documentation</h2>
+              <span class="svc-more">View details <i>+</i></span>
+            </button>
+            <p class="svc-desc" hidden>Good design should be buildable. Our construction drawing service translates design concepts into detailed technical drawings that contractors and construction teams can clearly understand and execute on site.</p>
           </li>
           <li class="svc-item reveal" id="building-permit">
-            <img class="svc-ico" src="images/service-4.png" alt="" width="260" height="222" loading="lazy">
-            <span class="svc-no">04</span>
-            <h2>Permit Drawing &amp; Submission Coordination</h2>
-            <p>We prepare drawings and supporting documentation required for building permit applications, including coordination with relevant professionals and authorities throughout the submission process.</p>
+            <button class="svc-open" type="button" aria-haspopup="dialog">
+              <img class="svc-ico" src="images/service-4.png" alt="" width="260" height="222" loading="lazy">
+              <span class="svc-no">04</span>
+              <h2 class="svc-title">Permit Drawing &amp; Submission Coordination</h2>
+              <span class="svc-more">View details <i>+</i></span>
+            </button>
+            <p class="svc-desc" hidden>We prepare drawings and supporting documentation required for building permit applications, including coordination with relevant professionals and authorities throughout the submission process.</p>
           </li>
           <li class="svc-item reveal" id="review">
-            <img class="svc-ico" src="images/service-5.png" alt="" width="260" height="222" loading="lazy">
-            <span class="svc-no">05</span>
-            <h2>Drawing, Design &amp; On&#8209;site Review</h2>
-            <p>With experience across both design and construction, we review drawings, design details, and on&#8209;site work to identify discrepancies, potential construction issues, and details that may affect the original design intent.</p>
+            <button class="svc-open" type="button" aria-haspopup="dialog">
+              <img class="svc-ico" src="images/service-5.png" alt="" width="260" height="222" loading="lazy">
+              <span class="svc-no">05</span>
+              <h2 class="svc-title">Drawing, Design &amp; On&#8209;site Review</h2>
+              <span class="svc-more">View details <i>+</i></span>
+            </button>
+            <p class="svc-desc" hidden>With experience across both design and construction, we review drawings, design details, and on&#8209;site work to identify discrepancies, potential construction issues, and details that may affect the original design intent.</p>
           </li>
         </ol>
       </div>
@@ -201,6 +216,21 @@
     </a>
   </div>
 
+  <!-- Service details pop-up -->
+  <div class="svc-modal" id="svcModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="svcModalTitle">
+    <div class="svc-modal-card" lang="en">
+      <button class="svc-close" aria-label="Close">&times;</button>
+      <img class="svc-modal-ico" alt="">
+      <span class="svc-no" id="svcModalNo"></span>
+      <h3 id="svcModalTitle"></h3>
+      <p id="svcModalDesc"></p>
+      <nav class="svc-modal-nav">
+        <button class="svc-prev" type="button">← Previous</button>
+        <button class="svc-next" type="button">Next →</button>
+      </nav>
+    </div>
+  </div>
+
   <!-- LINE QR modal (desktop) -->
   <div class="qr-modal" id="qrModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="qrTitle">
     <div class="qr-modal-card">
@@ -246,7 +276,7 @@
     <div class="lb-thumbs" id="lbThumbs"></div>
   </div>
 
-  <script src="js/projects.js?v=202610021709"></script>
-  <script src="js/main.js?v=202610021709"></script>
+  <script src="js/projects.js?v=202610021711"></script>
+  <script src="js/main.js?v=202610021711"></script>
 </body>
 </html>
