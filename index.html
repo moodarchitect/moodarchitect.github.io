@@ -3,80 +3,187 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Portfolio — ผลงานออกแบบ</title>
-  <meta name="description" content="รวมผลงานออกแบบ Branding, Poster, UI และ Photography">
+  <title>MOOD ARCHITECT</title>
+  <meta name="description" content="รวมผลงานออกแบบตกแต่งภายใน ที่พักอาศัย โรงเรียนอนุบาล และพื้นที่การเรียนรู้">
+  <meta property="og:title" content="MOOD ARCHITECT — ผลงานออกแบบตกแต่งภายใน">
+  <meta property="og:description" content="รวมผลงานออกแบบตกแต่งภายใน ที่พักอาศัย โรงเรียนอนุบาล และพื้นที่การเรียนรู้">
+  <meta property="og:image" content="images/hero-1.jpg">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Noto+Serif+Thai:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add("js");</script>
 </head>
 <body>
-  <header class="site-header">
-    <a href="#top" class="logo">YOUR<span>NAME</span></a>
-    <nav class="nav">
-      <a href="#work">ผลงาน</a>
-      <a href="#about">เกี่ยวกับ</a>
-      <a href="#contact">ติดต่อ</a>
-    </nav>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader-inner">
+      <span class="preloader-logo logo"><span class="logo-main">MOOD</span><span class="logo-sub"><i>A</i><i>R</i><i>C</i><i>H</i><i>I</i><i>T</i><i>E</i><i>C</i><i>T</i></span></span>
+      <span class="preloader-bar"><i></i></span>
+    </div>
+  </div>
+
+  <!-- Custom cursor (desktop) -->
+  <div class="cursor" id="cursor" aria-hidden="true"><span class="cursor-label"></span></div>
+
+  <!-- Scroll progress -->
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <!-- ===== เมนูด้านบน ===== -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="#hero" class="logo" aria-label="MOOD ARCHITECT หน้าแรก"><span class="logo-main">MOOD</span><span class="logo-sub"><i>A</i><i>R</i><i>C</i><i>H</i><i>I</i><i>T</i><i>E</i><i>C</i><i>T</i></span></a>
+
+      <nav class="nav" id="nav" aria-label="เมนูหลัก">
+        <a href="#hero">Home</a>
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span>
+      </button>
+    </div>
   </header>
 
-  <main id="top">
-    <section class="hero">
-      <p class="eyebrow">Visual Designer · Bangkok</p>
-      <h1>ออกแบบภาพที่<br><em>เล่าเรื่อง</em>ได้เอง</h1>
-      <p class="hero-sub">รวมผลงาน Branding, Poster, UI และ Photography</p>
-    </section>
+  <main>
 
-    <section id="work" class="work">
-      <div class="filters" role="tablist" aria-label="กรองตามหมวดหมู่"></div>
-      <div class="gallery" id="gallery"></div>
-    </section>
-
-    <section id="about" class="about">
-      <div class="about-img">
-        <img src="https://picsum.photos/seed/portrait/800/1000" alt="รูปโปรไฟล์" loading="lazy">
+    <!-- ===== หน้าแรก: slideshow ===== -->
+    <section class="hero" id="hero">
+      <div class="hero-slides" id="heroSlides">
+        <img class="hero-slide active" src="images/hero-1.jpg" alt="โถงบันไดเพดานสูง เปิดรับวิวสวนเขตร้อน">
+        <img class="hero-slide" src="images/hero-2.jpg" alt="ห้องรับแขกสไตล์คลาสสิก">
+        <img class="hero-slide" src="images/hero-3.jpg" alt="ห้องสมุดและโซนนั่งอ่าน ศูนย์การเรียนรู้">
+        <img class="hero-slide" src="images/hero-4.jpg" alt="ทางเดินในสวนหน้าอาคารเรียน">
       </div>
-      <div class="about-text">
-        <p class="eyebrow">เกี่ยวกับ</p>
-        <h2>สวัสดีครับ/ค่ะ</h2>
-        <p>นักออกแบบกราฟิกที่สนใจงานอัตลักษณ์แบรนด์ งานพิมพ์ และการออกแบบดิจิทัล
-          เชื่อว่างานออกแบบที่ดีต้องเรียบง่าย ชัดเจน และมีเหตุผลรองรับทุกองค์ประกอบ</p>
-        <ul class="skills">
-          <li>Brand Identity</li><li>Editorial</li><li>UI Design</li><li>Photography</li>
-        </ul>
+      <div class="hero-overlay"></div>
+
+      <div class="container hero-content">
+        <p class="eyebrow hero-anim">Selected Works</p>
+        <h1 class="hero-title">
+          <span class="line"><span>MOOD</span></span>
+          <span class="line"><span>ARCHITECT</span></span>
+        </h1>
+      </div>
+
+      <div class="hero-controls container">
+        <span class="hero-count"><b id="heroIndex">01</b> / <span id="heroTotal">04</span></span>
+        <div class="hero-dots" id="heroDots"></div>
       </div>
     </section>
 
-    <section id="contact" class="contact">
-      <p class="eyebrow">ติดต่อ</p>
-      <h2>มีโปรเจกต์อยากคุยกัน?</h2>
-      <a class="contact-mail" href="mailto:hello@example.com">hello@example.com</a>
-      <div class="socials">
-        <a href="#" target="_blank" rel="noopener">Instagram</a>
-        <a href="#" target="_blank" rel="noopener">Behance</a>
-        <a href="#" target="_blank" rel="noopener">Dribbble</a>
+    <!-- ===== เกี่ยวกับ ===== -->
+    <section class="section about" id="about">
+      <div class="container about-grid">
+        <div class="about-media reveal">
+          <div class="parallax-frame"><img src="images/image58.jpg" alt="ห้องนั่งเล่นเพดานสูง บ้านพักอาศัย ชุมพร" loading="lazy" data-parallax="0.12"></div>
+        </div>
+        <div class="about-text">
+          <p class="eyebrow reveal">About</p>
+          <h2 class="reveal">ทีมงานที่เข้าใจบ้านคุณ<br>ตั้งแต่แบบจนถึงวันส่งมอบ</h2>
+          <p class="lead reveal">MOOD ARCHITECT ก่อตั้งขึ้นในปี พ.ศ. 2567 โดยผู้บริหารและทีมงานที่มีประสบการณ์ในธุรกิจออกแบบ
+            ตกแต่งภายใน ก่อสร้าง รีโนเวท และพัฒนาโครงการมาอย่างต่อเนื่องยาวนานกว่า 15 ปี
+            ดูแลโครงการตั้งแต่บ้านพักอาศัยไปจนถึงโครงการขนาดใหญ่มูลค่าหลักร้อยล้านบาท</p>
+          <blockquote class="quote reveal">“งานที่ดีไม่ได้มีเพียงความสวยงาม แต่ต้องตอบโจทย์การใช้งาน สะท้อนตัวตนของผู้ใช้งาน และเหมาะสมกับงบประมาณ”</blockquote>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ผลงาน ===== -->
+    <section class="work" id="work">
+      <!-- แกลเลอรี -->
+      <div class="gallery-wrap" id="gallery-top">
+        <div class="gallery" id="gallery"></div>
+        <div class="more-wrap">
+          <button class="btn btn-outline btn-lg" id="loadMore">Details</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ติดต่อ ===== -->
+    <section class="cta" id="contact">
+      <div class="cta-bg"><img src="images/image111.jpg" alt="" loading="lazy" data-parallax="0.15"></div>
+      <div class="container cta-inner">
+        <div class="cta-text">
+          <p class="eyebrow reveal">Contact</p>
+          <h2 class="reveal">Contact Us</h2>
+          <dl class="contact-list reveal">
+            <div><dt>ที่อยู่</dt><dd data-address></dd></div>
+            <div><dt>โทร</dt><dd><a href="#" data-tel><span data-tel-text></span></a></dd></div>
+            <div><dt>LINE</dt><dd>สแกน QR Code</dd></div>
+          </dl>
+        </div>
+        <div class="qr-card reveal">
+          <img src="images/line-qr.jpg" alt="QR Code แอด LINE MOOD ARCHITECT" loading="lazy">
+          <p>สแกนเพื่อแอด LINE<br><b>MOOD ARCHITECT</b></p>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">© <span id="year"></span> YOUR NAME</footer>
+  <!-- ===== Footer ===== -->
+  <footer class="footer">
+    <div class="container footer-top">
+      <a href="#hero" class="logo" aria-label="MOOD ARCHITECT"><span class="logo-main">MOOD</span><span class="logo-sub"><i>A</i><i>R</i><i>C</i><i>H</i><i>I</i><i>T</i><i>E</i><i>C</i><i>T</i></span></a>
+      <nav class="footer-nav" aria-label="เมนูท้ายเว็บ">
+        <a href="#hero">Home</a>
+        <a href="#about">About</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="container footer-bottom">
+      <span>© <span id="year"></span> MOOD ARCHITECT. All rights reserved.</span>
+      <span class="footer-big" aria-hidden="true">MOOD ARCHITECT</span>
+    </div>
+  </footer>
 
-  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="ดูภาพขนาดใหญ่">
-    <button class="lb-close" aria-label="ปิด">&times;</button>
+  <!-- Floating buttons -->
+  <div class="floating" id="floating">
+    <button class="fab fab-top" id="toTop" aria-label="กลับขึ้นด้านบน">
+      <svg class="fab-ring" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="22"/></svg>
+      <svg class="fab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5l-7 7 1.4 1.4L11 8.8V20h2V8.8l4.6 4.6L19 12z"/></svg>
+    </button>
+    <button class="fab fab-line" data-line aria-label="QR Code LINE">
+      <svg class="fab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3C6.5 3 2 6.6 2 11c0 3.9 3.5 7.2 8.3 7.9.3.1.8.2.9.5.1.3.1.7 0 1l-.1.9c0 .3-.2 1 .9.6 1.1-.5 6-3.5 8.2-6C21.4 14.3 22 12.7 22 11c0-4.4-4.5-8-10-8z"/></svg>
+    </button>
+    <a href="#" class="fab fab-tel" data-tel aria-label="โทรหาเรา">
+      <svg class="fab-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1z"/></svg>
+    </a>
+  </div>
+
+  <!-- LINE QR modal (desktop) -->
+  <div class="qr-modal" id="qrModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="qrTitle">
+    <div class="qr-modal-card">
+      <button class="qr-close" aria-label="ปิด">&times;</button>
+      <img src="images/line-qr.jpg" alt="QR Code LINE MOOD ARCHITECT">
+      <h3 id="qrTitle">แอด LINE MOOD ARCHITECT</h3>
+      <p>สแกน QR Code ด้วยแอป LINE</p>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="ดูภาพผลงาน">
+    <div class="lb-top">
+      <span class="lb-count"></span>
+      <button class="lb-close" aria-label="ปิด">&times;</button>
+    </div>
     <button class="lb-nav lb-prev" aria-label="ภาพก่อนหน้า">&#8249;</button>
     <figure class="lb-figure">
       <img class="lb-img" alt="">
       <figcaption>
-        <span class="lb-cat"></span>
+        <span class="lb-meta"></span>
         <h3 class="lb-title"></h3>
-        <p class="lb-desc"></p>
-        <span class="lb-count"></span>
       </figcaption>
     </figure>
     <button class="lb-nav lb-next" aria-label="ภาพถัดไป">&#8250;</button>
+    <div class="lb-thumbs" id="lbThumbs"></div>
   </div>
 
-  <script src="projects.js"></script>
-  <script src="script.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/main.js"></script>
 </body>
 </html>
