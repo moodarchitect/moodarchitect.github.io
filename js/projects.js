@@ -131,9 +131,9 @@ const PROJECTS = [
     ],
   },
   {
-    slug: "school-building",
-    title: "School Building",
-    category: "Architecture",
+    slug: "maya-rob-house",
+    title: "Maya Rob House",
+    category: "Residential",
     location: "Thailand",
     cover: "images/image113.jpg",
     description: "Building exterior and landscape — timber screens, a moon gate and a stepping-stone garden path.",
