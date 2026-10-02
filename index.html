@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Portfolio — ผลงานออกแบบ</title>
+  <meta name="description" content="รวมผลงานออกแบบ Branding, Poster, UI และ Photography">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=Fraunces:opsz,wght@9..144,400;9..144,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a href="#top" class="logo">YOUR<span>NAME</span></a>
+    <nav class="nav">
+      <a href="#work">ผลงาน</a>
+      <a href="#about">เกี่ยวกับ</a>
+      <a href="#contact">ติดต่อ</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <p class="eyebrow">Visual Designer · Bangkok</p>
+      <h1>ออกแบบภาพที่<br><em>เล่าเรื่อง</em>ได้เอง</h1>
+      <p class="hero-sub">รวมผลงาน Branding, Poster, UI และ Photography</p>
+    </section>
+
+    <section id="work" class="work">
+      <div class="filters" role="tablist" aria-label="กรองตามหมวดหมู่"></div>
+      <div class="gallery" id="gallery"></div>
+    </section>
+
+    <section id="about" class="about">
+      <div class="about-img">
+        <img src="https://picsum.photos/seed/portrait/800/1000" alt="รูปโปรไฟล์" loading="lazy">
+      </div>
+      <div class="about-text">
+        <p class="eyebrow">เกี่ยวกับ</p>
+        <h2>สวัสดีครับ/ค่ะ</h2>
+        <p>นักออกแบบกราฟิกที่สนใจงานอัตลักษณ์แบรนด์ งานพิมพ์ และการออกแบบดิจิทัล
+          เชื่อว่างานออกแบบที่ดีต้องเรียบง่าย ชัดเจน และมีเหตุผลรองรับทุกองค์ประกอบ</p>
+        <ul class="skills">
+          <li>Brand Identity</li><li>Editorial</li><li>UI Design</li><li>Photography</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <p class="eyebrow">ติดต่อ</p>
+      <h2>มีโปรเจกต์อยากคุยกัน?</h2>
+      <a class="contact-mail" href="mailto:hello@example.com">hello@example.com</a>
+      <div class="socials">
+        <a href="#" target="_blank" rel="noopener">Instagram</a>
+        <a href="#" target="_blank" rel="noopener">Behance</a>
+        <a href="#" target="_blank" rel="noopener">Dribbble</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">© <span id="year"></span> YOUR NAME</footer>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="ดูภาพขนาดใหญ่">
+    <button class="lb-close" aria-label="ปิด">&times;</button>
+    <button class="lb-nav lb-prev" aria-label="ภาพก่อนหน้า">&#8249;</button>
+    <figure class="lb-figure">
+      <img class="lb-img" alt="">
+      <figcaption>
+        <span class="lb-cat"></span>
+        <h3 class="lb-title"></h3>
+        <p class="lb-desc"></p>
+        <span class="lb-count"></span>
+      </figcaption>
+    </figure>
+    <button class="lb-nav lb-next" aria-label="ภาพถัดไป">&#8250;</button>
+  </div>
+
+  <script src="projects.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
