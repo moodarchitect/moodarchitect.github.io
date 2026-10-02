@@ -5,7 +5,7 @@
 const CONTACT = {
   phone: { tel: "0989835090", display: "098-983-5090" },
   // ขึ้นบรรทัดใหม่ด้วย \n
-  address: "เลขที่ 9/69 หมู่ 1\nซอยบ้านกลาง 1/4 (ซอยเลียบคลองประปา)\nถนนปทุม-รังสิต ตำบลบ้านกลาง\nอำเภอเมือง จังหวัดปทุมธานี 12000",
+  address: "9/69 Moo 1, Soi Ban Klang 1/4 (Soi Liap Khlong Prapa)\nPathum–Rangsit Road, Ban Klang Subdistrict\nMueang Pathum Thani District\nPathum Thani 12000, Thailand",
 };
 // LINE: ใช้รูป QR Code ที่ images/line-qr.jpg (เปลี่ยนรูปนี้ถ้ามี QR ใหม่)
 
