@@ -42,35 +42,38 @@
   qrModal.addEventListener("click", e => { if (e.target === qrModal) setQr(false); });
   document.addEventListener("keydown", e => { if (e.key === "Escape" && qrModal.classList.contains("open")) setQr(false); });
 
-  // ---------- Hero slideshow ----------
-  const slides = $$(".hero-slide");
+  // ---------- Hero slideshow (home page only) ----------
+  let startHero = () => {};
   const dotsEl = $("#heroDots");
-  const SLIDE_MS = 6000;
-  let slideIndex = 0, slideTimer = null;
-  dotsEl.innerHTML = slides.map((_, i) => `<button class="hero-dot" aria-label="ภาพที่ ${i + 1}"><i></i></button>`).join("");
-  dotsEl.style.setProperty("--dur", `${SLIDE_MS}ms`);
-  const dots = $$(".hero-dot", dotsEl);
-  $("#heroTotal").textContent = String(slides.length).padStart(2, "0");
+  if (dotsEl) {
+    const slides = $$(".hero-slide");
+    const SLIDE_MS = 6000;
+    let slideIndex = 0, slideTimer = null;
+    dotsEl.innerHTML = slides.map((_, i) => `<button class="hero-dot" aria-label="ภาพที่ ${i + 1}"><i></i></button>`).join("");
+    dotsEl.style.setProperty("--dur", `${SLIDE_MS}ms`);
+    const dots = $$(".hero-dot", dotsEl);
+    $("#heroTotal").textContent = String(slides.length).padStart(2, "0");
 
-  function goSlide(i) {
-    slideIndex = (i + slides.length) % slides.length;
-    slides.forEach((s, n) => s.classList.toggle("active", n === slideIndex));
-    dots.forEach((d, n) => {
-      d.classList.remove("active");
-      d.classList.toggle("done", n < slideIndex);
+    const goSlide = i => {
+      slideIndex = (i + slides.length) % slides.length;
+      slides.forEach((s, n) => s.classList.toggle("active", n === slideIndex));
+      dots.forEach((d, n) => {
+        d.classList.remove("active");
+        d.classList.toggle("done", n < slideIndex);
+      });
+      void dotsEl.offsetWidth; // restart the fill animation
+      dots[slideIndex].classList.add("active");
+      $("#heroIndex").textContent = String(slideIndex + 1).padStart(2, "0");
+      clearTimeout(slideTimer);
+      if (!reduceMotion) slideTimer = setTimeout(() => goSlide(slideIndex + 1), SLIDE_MS);
+    };
+    startHero = () => goSlide(0);
+    dots.forEach((d, i) => d.addEventListener("click", () => goSlide(i)));
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) clearTimeout(slideTimer);
+      else if (revealed) goSlide(slideIndex);
     });
-    void dotsEl.offsetWidth; // restart the fill animation
-    dots[slideIndex].classList.add("active");
-    $("#heroIndex").textContent = String(slideIndex + 1).padStart(2, "0");
-    clearTimeout(slideTimer);
-    if (!reduceMotion) slideTimer = setTimeout(() => goSlide(slideIndex + 1), SLIDE_MS);
   }
-  function startHero() { goSlide(0); }
-  dots.forEach((d, i) => d.addEventListener("click", () => goSlide(i)));
-  document.addEventListener("visibilitychange", () => {
-    if (document.hidden) clearTimeout(slideTimer);
-    else if (revealed) goSlide(slideIndex);
-  });
 
   // ---------- Header, scroll progress, back-to-top ring ----------
   const header = $("#header");
@@ -102,7 +105,9 @@
       navLinks.forEach(a => a.classList.toggle("active", a.getAttribute("href") === `#${e.target.id}`));
     });
   }, { rootMargin: "-45% 0px -50% 0px" });
-  ["hero", "about", "services", "work", "contact"].forEach(id => sectionObserver.observe(document.getElementById(id)));
+  ["hero", "about", "work", "contact"]
+    .map(id => document.getElementById(id)).filter(Boolean)
+    .forEach(el => sectionObserver.observe(el));
 
   // ---------- Mobile menu ----------
   const toggle = $("#menuToggle");
@@ -113,6 +118,9 @@
   };
   toggle.addEventListener("click", () => setMenu(!document.body.classList.contains("menu-open")));
   $$("#nav a").forEach(a => a.addEventListener("click", () => setMenu(false)));
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape" && document.body.classList.contains("menu-open")) setMenu(false);
+  });
 
   // ---------- Parallax ----------
   const parallaxEls = $$("[data-parallax]");
@@ -129,8 +137,9 @@
     });
   }
 
-  // ---------- Projects grid ----------
+  // ---------- Projects, project page and lightbox (home page only) ----------
   const projectsEl = $("#projects");
+  if (projectsEl) {
   projectsEl.innerHTML = PROJECTS.map((p, i) => `
     <a class="project-card reveal" href="#project/${p.slug}" data-cursor="View">
       <img src="${p.cover}" alt="${p.title}" loading="lazy">
@@ -257,7 +266,6 @@
   lb.addEventListener("click", e => { if (e.target === lb || e.target === $(".lb-figure", lb)) closeLightbox(); });
 
   document.addEventListener("keydown", e => {
-    if (e.key === "Escape" && document.body.classList.contains("menu-open")) setMenu(false);
     if (!lb.classList.contains("open")) {
       if (e.key === "Escape" && openSlug && !qrModal.classList.contains("open")) location.hash = "work";
       return;
@@ -274,6 +282,9 @@
     if (Math.abs(dx) > 50) show(current + (dx < 0 ? 1 : -1));
     touchX = null;
   });
+
+  route();
+  } // end home-page-only block
 
   // ---------- Reveal on scroll ----------
   const revealObserver = new IntersectionObserver(entries => {
@@ -309,6 +320,5 @@
     })();
   }
 
-  route();
   onScroll();
 })();
