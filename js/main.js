@@ -102,7 +102,7 @@
       navLinks.forEach(a => a.classList.toggle("active", a.getAttribute("href") === `#${e.target.id}`));
     });
   }, { rootMargin: "-45% 0px -50% 0px" });
-  ["hero", "about", "work", "contact"].forEach(id => sectionObserver.observe(document.getElementById(id)));
+  ["hero", "about", "services", "work", "contact"].forEach(id => sectionObserver.observe(document.getElementById(id)));
 
   // ---------- Mobile menu ----------
   const toggle = $("#menuToggle");
@@ -129,22 +129,44 @@
     });
   }
 
-  // ---------- Portfolio ----------
-  const PAGE = 9;
-  const gallery = $("#gallery");
-  const loadMore = $("#loadMore");
-  const filtered = PROJECTS; // every project is shown; kept as a name the lightbox uses
-  let shown = PAGE;
+  // ---------- Projects grid ----------
+  const projectsEl = $("#projects");
+  projectsEl.innerHTML = PROJECTS.map((p, i) => `
+    <a class="project-card reveal" href="#project/${p.slug}" data-cursor="View">
+      <img src="${p.cover}" alt="${p.title}" loading="lazy">
+      <span class="project-info">
+        <span class="project-no">${String(i + 1).padStart(2, "0")}</span>
+        <span class="project-title">${p.title}</span>
+        <span class="project-meta">${p.category} · ${p.location} · ${p.images.length} images</span>
+      </span>
+      <span class="project-cta">View project <i>→</i></span>
+    </a>`).join("");
 
-  function cardHTML(p, i, delayIndex) {
+  // ---------- Project page (#project/<slug>) ----------
+  const PAGE = 9;
+  const view = $("#projectView");
+  const pvGallery = $("#pvGallery");
+  const baseTitle = document.title;
+  let openSlug = null;
+  let lbItems = []; // photos the lightbox steps through (the open project's)
+
+  function cardHTML(img, i) {
     return `
-      <button class="card" data-index="${i}" data-cursor="ดู" style="--d:${(delayIndex % 3) * 90}ms" aria-label="ดูภาพ ${p.title}">
-        <img src="${p.image}" alt="${p.title}" loading="lazy">
-        <span class="card-info">
-          <span class="card-meta">${p.category} · ${p.type}</span>
-          <span class="card-title">${p.title}</span>
-        </span>
+      <button class="card" data-index="${i}" data-cursor="View" style="--d:${(i % 3) * 90}ms" aria-label="View ${img.caption}">
+        <img src="${img.src}" alt="${img.caption}" loading="lazy">
+        <span class="card-info"><span class="card-title">${img.caption}</span></span>
       </button>`;
+  }
+  // Photos are grouped into blocks of 9. Full blocks alternate between two mosaic
+  // layouts (bento-a / bento-b); a short final block uses an even grid.
+  function blocksHTML(images) {
+    let html = "";
+    for (let start = 0; start < images.length; start += PAGE) {
+      const items = images.slice(start, start + PAGE);
+      const layout = items.length < PAGE ? "bento-tail" : (start / PAGE) % 2 ? "bento-b" : "bento-a";
+      html += `<div class="bento ${layout}">${items.map((img, n) => cardHTML(img, start + n)).join("")}</div>`;
+    }
+    return html;
   }
   function watchLoaded(root) {
     $$(".card:not(.loaded) img", root).forEach(img => {
@@ -153,30 +175,41 @@
       else { img.addEventListener("load", done, { once: true }); img.addEventListener("error", done, { once: true }); }
     });
   }
-  // Cards are grouped into blocks of PAGE (9) tiles. Full blocks alternate between
-  // two mosaic layouts (bento-a / bento-b); a short final block uses an even grid.
-  function blocksHTML(from, to) {
-    let html = "";
-    for (let start = from; start < to; start += PAGE) {
-      const items = filtered.slice(start, Math.min(start + PAGE, to));
-      const layout = items.length < PAGE ? "bento-tail" : (start / PAGE) % 2 ? "bento-b" : "bento-a";
-      html += `<div class="bento ${layout}">${items.map((p, n) => cardHTML(p, start + n, n)).join("")}</div>`;
-    }
-    return html;
+
+  function openProject(slug) {
+    const i = PROJECTS.findIndex(p => p.slug === slug);
+    if (i < 0) { closeProject(); return; }
+    const p = PROJECTS[i], next = PROJECTS[(i + 1) % PROJECTS.length];
+    openSlug = slug;
+    $("#pvMeta").textContent = `${p.category} · ${p.location}`;
+    $("#pvTitle").textContent = p.title;
+    $("#pvDesc").textContent = p.description;
+    $("#pvCount").textContent = `${p.images.length} images`;
+    lbItems = p.images.map(img => ({ src: img.src, title: img.caption, meta: p.title }));
+    pvGallery.innerHTML = blocksHTML(p.images);
+    watchLoaded(pvGallery);
+    $("#pvNext").innerHTML = `<a href="#project/${next.slug}"><span>Next project</span><b>${next.title} <i>→</i></b></a>`;
+    view.scrollTop = 0;
+    view.classList.add("open");
+    view.setAttribute("aria-hidden", "false");
+    document.body.classList.add("view-open");
+    document.title = `${p.title} — ${baseTitle}`;
+    view.focus({ preventScroll: true });
   }
-  function renderGallery() {
-    gallery.innerHTML = blocksHTML(0, Math.min(shown, filtered.length));
-    watchLoaded(gallery);
-    loadMore.parentElement.hidden = shown >= filtered.length;
+  function closeProject() {
+    if (!openSlug) return;
+    openSlug = null;
+    view.classList.remove("open");
+    view.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("view-open");
+    document.title = baseTitle;
   }
-  loadMore.addEventListener("click", () => {
-    const from = shown;
-    shown += PAGE;
-    gallery.insertAdjacentHTML("beforeend", blocksHTML(from, Math.min(shown, filtered.length)));
-    watchLoaded(gallery);
-    loadMore.parentElement.hidden = shown >= filtered.length;
-  });
-  gallery.addEventListener("click", e => {
+  function route() {
+    const m = location.hash.match(/^#project\/([\w-]+)$/);
+    if (m) openProject(m[1]); else closeProject();
+  }
+  addEventListener("hashchange", route);
+  pvGallery.addEventListener("click", e => {
     const card = e.target.closest(".card");
     if (card) openLightbox(+card.dataset.index);
   });
@@ -188,14 +221,14 @@
   let current = 0, lastFocus = null;
 
   function show(i) {
-    current = (i + filtered.length) % filtered.length;
-    const p = filtered[current];
+    current = (i + lbItems.length) % lbItems.length;
+    const p = lbItems[current];
     lbImg.classList.remove("in");
-    lbImg.src = p.image;
+    lbImg.src = p.src;
     lbImg.alt = p.title;
     $(".lb-title", lb).textContent = p.title;
-    $(".lb-meta", lb).textContent = `${p.category} · ${p.type}`;
-    $(".lb-count", lb).textContent = `${String(current + 1).padStart(2, "0")} / ${String(filtered.length).padStart(2, "0")}`;
+    $(".lb-meta", lb).textContent = p.meta;
+    $(".lb-count", lb).textContent = `${String(current + 1).padStart(2, "0")} / ${String(lbItems.length).padStart(2, "0")}`;
     $$(".lb-thumb", thumbs).forEach((t, n) => t.classList.toggle("active", n === current));
     $(".lb-thumb.active", thumbs)?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
   }
@@ -203,8 +236,8 @@
 
   function openLightbox(i) {
     lastFocus = document.activeElement;
-    thumbs.innerHTML = filtered.map((p, n) =>
-      `<button class="lb-thumb" data-i="${n}" aria-label="${p.title}"><img src="${p.image}" alt="" loading="lazy"></button>`).join("");
+    thumbs.innerHTML = lbItems.map((p, n) =>
+      `<button class="lb-thumb" data-i="${n}" aria-label="${p.title}"><img src="${p.src}" alt="" loading="lazy"></button>`).join("");
     lb.classList.add("open");
     lb.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
@@ -225,7 +258,10 @@
 
   document.addEventListener("keydown", e => {
     if (e.key === "Escape" && document.body.classList.contains("menu-open")) setMenu(false);
-    if (!lb.classList.contains("open")) return;
+    if (!lb.classList.contains("open")) {
+      if (e.key === "Escape" && openSlug && !qrModal.classList.contains("open")) location.hash = "work";
+      return;
+    }
     if (e.key === "Escape") closeLightbox();
     if (e.key === "ArrowLeft") show(current - 1);
     if (e.key === "ArrowRight") show(current + 1);
@@ -273,6 +309,6 @@
     })();
   }
 
-  renderGallery();
+  route();
   onScroll();
 })();

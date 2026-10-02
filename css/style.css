@@ -245,7 +245,72 @@ html:not(.js) .hero-title .line > span, html:not(.js) .hero-anim { transform: no
 
 /* ---------- Work ---------- */
 .work { padding: 0 0 var(--section); }
-.gallery-wrap { padding-top: 0; }
+
+/* Project covers: full-bleed 12-column grid, pattern repeats every 6 projects
+   row 1: wide + medium · row 2: three equal · row 3: one panorama */
+.projects { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; }
+.project-card {
+  position: relative; display: block; overflow: hidden; background: var(--line);
+  grid-column: span 4; height: clamp(300px, 30vw, 540px);
+}
+.project-card:nth-child(6n+1) { grid-column: span 7; height: clamp(340px, 40vw, 700px); }
+.project-card:nth-child(6n+2) { grid-column: span 5; height: clamp(340px, 40vw, 700px); }
+.project-card:nth-child(6n)   { grid-column: span 12; height: clamp(280px, 34vw, 600px); }
+.project-card img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  transition: transform 1.4s var(--ease-out), filter .8s var(--ease);
+}
+.project-card::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,.72) 100%);
+}
+.project-card:hover img, .project-card:focus-visible img { transform: scale(1.05); }
+.project-info {
+  position: absolute; left: 0; right: 0; bottom: 0; z-index: 1;
+  display: grid; gap: 2px; padding: clamp(20px, 2.6vw, 40px); color: #fff;
+}
+.project-no { font-family: "Montserrat", var(--sans); font-size: 13px; letter-spacing: .2em; opacity: .75; }
+.project-title { font-family: var(--serif); font-weight: 300; font-size: clamp(26px, 2.8vw, 44px); line-height: 1.2; }
+.project-meta { font-size: 14px; letter-spacing: .04em; opacity: .8; }
+.project-cta {
+  position: absolute; top: clamp(18px, 2vw, 28px); right: clamp(18px, 2vw, 28px); z-index: 1;
+  padding: 10px 18px; background: rgba(255,255,255,.92); color: var(--black);
+  font-size: 14px; font-weight: 500; letter-spacing: .02em;
+  opacity: 0; transform: translateY(-8px);
+  transition: opacity .4s var(--ease-out), transform .4s var(--ease-out);
+}
+.project-cta i { font-style: normal; display: inline-block; transition: transform .3s var(--ease); }
+.project-card:hover .project-cta, .project-card:focus-visible .project-cta { opacity: 1; transform: none; }
+.project-card:hover .project-cta i { transform: translateX(4px); }
+@media (hover: none) { .project-cta { opacity: 1; transform: none; } }
+
+/* Project page overlay */
+body.view-open { overflow: hidden; }
+.project-view:focus { outline: none; }
+.project-view {
+  position: fixed; inset: 0; z-index: 80; overflow-y: auto; overscroll-behavior: contain;
+  background: var(--white);
+  opacity: 0; visibility: hidden; transform: translateY(24px);
+  transition: opacity .5s var(--ease-out), transform .6s var(--ease-out), visibility .5s;
+}
+.project-view.open { opacity: 1; visibility: visible; transform: none; }
+.pv-bar {
+  position: sticky; top: 0; z-index: 2;
+  background: rgba(250,250,248,.92); backdrop-filter: saturate(1.4) blur(14px);
+  box-shadow: 0 1px 0 var(--line);
+}
+.pv-bar-inner { display: flex; align-items: center; justify-content: space-between; height: 64px; font-size: 15px; }
+.pv-back { font-weight: 500; transition: opacity .2s; }
+.pv-back:hover { opacity: .6; }
+.pv-count { color: var(--grey); font-size: 14px; }
+.pv-head { padding-top: clamp(48px, 7vw, 96px); padding-bottom: clamp(32px, 4vw, 56px); }
+.pv-title { font-size: clamp(40px, 6vw, 84px); line-height: 1.1; margin-bottom: 20px; }
+.pv-next { padding-top: clamp(64px, 8vw, 120px); padding-bottom: clamp(64px, 8vw, 120px); }
+.pv-next a { display: inline-grid; gap: 6px; }
+.pv-next span { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--grey); }
+.pv-next b { font-family: var(--serif); font-weight: 300; font-size: clamp(30px, 4.4vw, 60px); line-height: 1.2; }
+.pv-next b i { font-style: normal; display: inline-block; transition: transform .4s var(--ease-out); }
+.pv-next a:hover b i { transform: translateX(10px); }
 
 /* ---------- About ---------- */
 .about-grid {
@@ -317,8 +382,6 @@ html:not(.js) .hero-title .line > span, html:not(.js) .hero-anim { transform: no
 @media (hover: none) {
   .card::after, .card-info { opacity: 1; transform: none; }
 }
-.more-wrap { display: flex; justify-content: center; margin-top: clamp(48px, 6vw, 72px); }
-.more-wrap[hidden] { display: none; }
 
 /* ---------- CTA ---------- */
 .cta { position: relative; overflow: hidden; color: #fff; padding: var(--section) 0; background: var(--black); }
@@ -508,3 +571,39 @@ html:not(.js) .hero-title .line > span, html:not(.js) .hero-anim { transform: no
 .qr-modal-card p { color: var(--grey); font-size: 15px; margin: 6px 0 20px; }
 .qr-close { position: absolute; top: 8px; right: 12px; font-size: 32px; line-height: 1; padding: 4px; color: var(--grey); transition: transform .3s var(--ease-out); }
 .qr-close:hover { transform: rotate(90deg); color: var(--ink); }
+
+/* ---------- Project covers: tablet & phone ---------- */
+@media (max-width: 860px) {
+  .project-card, .project-card:nth-child(6n+1), .project-card:nth-child(6n+2), .project-card:nth-child(6n) {
+    grid-column: span 6; height: 56vw;
+  }
+  .project-card:nth-child(3n+1) { grid-column: span 12; height: 64vw; }
+}
+@media (max-width: 600px) {
+  .project-card, .project-card:nth-child(6n+1), .project-card:nth-child(6n+2), .project-card:nth-child(6n), .project-card:nth-child(3n+1) {
+    grid-column: span 12; height: 80vw;
+  }
+  .pv-bar-inner { height: 56px; }
+}
+
+/* ---------- Services ---------- */
+.services { padding-top: 0; }
+.service-list { border-top: 1px solid var(--line); }
+.service {
+  display: grid; grid-template-columns: minmax(0, 3fr) minmax(0, 4fr) minmax(0, 5fr);
+  gap: 16px 48px; align-items: baseline;
+  padding: clamp(28px, 3vw, 40px) 0; border-bottom: 1px solid var(--line);
+}
+.service-no {
+  font-family: "Montserrat", var(--sans); font-size: 12px; font-weight: 400;
+  letter-spacing: .2em; text-transform: uppercase; color: var(--grey);
+}
+.service h3 {
+  font-family: var(--serif); font-weight: 300; font-size: clamp(22px, 2vw, 30px); line-height: 1.3;
+  transition: transform .5s var(--ease-out);
+}
+.service p { color: var(--grey); font-size: 16px; line-height: 1.75; }
+.service:hover h3 { transform: translateX(8px); }
+@media (max-width: 860px) {
+  .service { grid-template-columns: 1fr; gap: 10px; }
+}
