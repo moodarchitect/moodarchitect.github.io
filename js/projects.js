@@ -131,8 +131,8 @@ const PROJECTS = [
     ],
   },
   {
-    slug: "maya-rob-house",
-    title: "Maya Rob House",
+    slug: "maiyalap-house",
+    title: "Maiyalap House",
     category: "Residential",
     location: "Thailand",
     cover: "images/image113.jpg",
